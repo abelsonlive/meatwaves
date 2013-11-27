@@ -2,6 +2,8 @@ from socketIO_client import SocketIO
 import re
 import requests
 import tweepy
+import os
+
 
 
 # Listening to meatspac, sending back to staging for now
@@ -14,10 +16,10 @@ M2T = re.compile("^MT(:)?")
 class MeatWaves(object):
 
     def __init__(self):
-        self.consumer_key = 'PcKs75IuujSnsaeBeD1ieA'
-        self.consumer_secret = 'TSi7RGypeSZkYVVVuaXrEkVZcxuR3wvmsxF4FGgBo'
-        self.access_token = '2215261214-FVPClsoHnlxfmq1CKHlYCI0lFsEJjBHSMvDtUkt'
-        self.access_token_secret = 'efUCTN8xCxnEX3Zm3u1wHM1d4KeEVAIoHjW5pqxrnhufT'
+        self.consumer_key = os.getenv('MT_CONSUMER_KEY')
+        self.consumer_secret = os.getenv('MT_CONSUMER_SECRET')
+        self.access_token = os.getenv('MT_ACCESS_TOKEN')
+        self.access_token_secret = os.getenv('MT_ACCESS_TOKEN_SECRET')
 
         self.api = self.connect_to_twitter()
 
@@ -40,8 +42,8 @@ class MeatWaves(object):
 
             m = M2T.search(message)
             if m:
-              print message
               message = M2T.sub('', message).strip()
+              print message
               try:
                 self.api.update_status(message)
               except tweepy.TweepError:
