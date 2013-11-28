@@ -7,6 +7,7 @@ import base64
 from PIL import Image
 import StringIO
 import subprocess
+from random import choice
 
 # Listening to meatspac, sending back to staging for now
 # This can be just an ADDRESS variable when/if listening to meatspac and posting back
@@ -14,6 +15,7 @@ ADDRESS = 'https://chat.meatspac.es'
 ADDRESS2 = 'http://chat-staging.meatspac.es'
 
 M2T = re.compile("^MT(:)?")
+NUMBERS = range(0, 1000000)
 
 class MeatWaves(object):
 
@@ -56,11 +58,12 @@ class MeatWaves(object):
       im = Image.open(f)
 
       # save image and open it up again, don't know why i have to do this, it's a hack...
-      im.save('img.gif')
-      media = open('img.gif', 'rb')
+      path = 'img%s.gif' % str(choice(NUMBERS))
+      im.save(path)
+      media = open(path, 'rb')
 
       # remove image
-      subprocess.call(['rm', 'img.gif'])
+      subprocess.call(['rm', path])
 
       return media
 
