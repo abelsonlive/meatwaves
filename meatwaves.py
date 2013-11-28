@@ -82,7 +82,7 @@ class MeatWaves(object):
       message = MT.sub('', message).strip()
       
       # disable direct messages
-      if message.lower().startswith('d'):
+      if message.lower().startswith('d '):
         message = message[1:].strip()
 
       print message
