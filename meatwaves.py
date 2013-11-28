@@ -8,6 +8,7 @@ from PIL import Image
 import StringIO
 import subprocess
 from random import choice
+import yaml
 
 # Listening to meatspac, sending back to staging for now
 # This can be just an ADDRESS variable when/if listening to meatspac and posting back
@@ -17,18 +18,25 @@ ADDRESS2 = 'http://chat-staging.meatspac.es'
 M2T = re.compile("^MT(:)?")
 NUMBERS = range(0, 1000000)
 
+CONFIG = yaml.safe_load(open('meatwaves.yml'))
+
 class MeatWaves(object):
 
     def __init__(self):
-      self.consumer_key = os.getenv('MT_CONSUMER_KEY')
-      self.consumer_secret = os.getenv('MT_CONSUMER_SECRET')
-      self.access_token = os.getenv('MT_ACCESS_TOKEN')
-      self.access_token_secret = os.getenv('MT_ACCESS_TOKEN_SECRET')
+      self.consumer_key = CONFIG["consumer_key"]
+      self.consumer_secret = CONFIG["consumer_secret"]
+      self.access_token = CONFIG["access_token"]
+      self.access_token_secret = CONFIG["access_token_secret"]
 
       self.api = self.connect_to_twitter()
 
-      print "Listening to %s" % ADDRESS
-      with SocketIO(ADDRESS) as socketIO:
+      print CONFIG["consumer_key"]
+      print CONFIG["consumer_secret"]
+      print CONFIG["access_token"]
+      print CONFIG["access_token_secret"]
+      
+      print "Listening to %s" % ADDRESS2
+      with SocketIO(ADDRESS2) as socketIO:
           socketIO.on('message', self.on_message)
           socketIO.wait()
 
@@ -87,11 +95,8 @@ class MeatWaves(object):
           # format media
           media = self.format_media(b64)
 
-          try:
-            self.api.update_status_with_media(status=message, media=media)
-
-          except tweepy.TweepError:
-            pass
+          # post
+          self.api.update_status_with_media(status=message, media=media)
 
       except Exception as e:
         print(e.message)
