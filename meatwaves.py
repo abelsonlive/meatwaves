@@ -54,7 +54,7 @@ class MeatWaves(object):
       # read in encoded data
       f = StringIO.StringIO(data)
 
-      # get original height and width
+      # open image
       im = Image.open(f)
 
       # save image and open it up again, don't know why i have to do this, it's a hack...
@@ -77,12 +77,22 @@ class MeatWaves(object):
         m = M2T.search(message)
         if m:
           message = M2T.sub('', message).strip()
+          
+          # disable direct messages
+          if message.lower().startswith('d'):
+            message = message[1:].strip()
+
           print message
+          
+          # format media
           media = self.format_media(b64)
+
           try:
             self.api.update_status_with_media(status=message, media=media)
+
           except tweepy.TweepError:
             pass
+
       except:
         pass
 
