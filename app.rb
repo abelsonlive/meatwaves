@@ -3,7 +3,7 @@ Bundler.require
 
 class App < Sinatra::Base
 
-	set :database, "sqlite3:///database.db"
+	set :database, "sqlite3:///meats.db"
 
 	get "/" do
 		"Hello World!"
