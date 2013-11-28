@@ -83,7 +83,7 @@ class MeatWaves(object):
             message = message[1:].strip()
 
           print message
-          
+
           # format media
           media = self.format_media(b64)
 
@@ -93,8 +93,8 @@ class MeatWaves(object):
           except tweepy.TweepError:
             pass
 
-      except:
-        pass
+      except Exception as e:
+        print(e.message)
 
 if __name__ == '__main__':
     mw = MeatWaves()
