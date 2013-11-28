@@ -30,13 +30,8 @@ class MeatWaves(object):
 
       self.api = self.connect_to_twitter()
 
-      print CONFIG["consumer_key"]
-      print CONFIG["consumer_secret"]
-      print CONFIG["access_token"]
-      print CONFIG["access_token_secret"]
-      
-      print "Listening to %s" % ADDRESS2
-      with SocketIO(ADDRESS2) as socketIO:
+      print "Listening to %s" % ADDRESS
+      with SocketIO(ADDRESS) as socketIO:
           socketIO.on('message', self.on_message)
           socketIO.wait()
 
