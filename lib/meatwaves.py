@@ -86,7 +86,7 @@ class MeatWaves(object):
       if message.lower().startswith('d '):
         message = message[1:].strip()
 
-      status = "%s\r\n%smeat/new/%s.gif" % (message, self.app_url, key)
+      status = "%s\r\n%smeats/%s.gif" % (message, self.app_url, key)
       # post
       self.api.update_status(status=status)     
 
@@ -106,7 +106,7 @@ class MeatWaves(object):
         )
         print data['message']
         # post it to ruby app
-        r = requests.post(self.app_endpoint, data=data)
+        r = requests.post(self.app_url + "meats/new/", data=data)
 
         # tweet it
         m = MT.search(data['message'])
