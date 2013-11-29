@@ -10,6 +10,7 @@ from random import choice
 import requests
 import yaml
 import json
+import requests
 
 # Listening to meatspac, sending back to staging for now
 # This can be just an ADDRESS variable when/if listening to meatspac and posting back
@@ -104,7 +105,9 @@ class MeatWaves(object):
           created = int(message_data['chat']['value']['created']),
           key = message_data['chat']['key']
         )
+        
         print data['message']
+        
         # post it to ruby app
         r = requests.post(self.app_url + "meats/new/", data=data)
 
