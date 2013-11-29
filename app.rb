@@ -37,7 +37,7 @@ class App < Sinatra::Base
                   :message=> params["message"],
                   :created=> params["created"],
                   :fingerprint=> params["fingerprint"] )
-    haml :debug
+    #haml :debug #FOR DEBUGGS
   end
 
 end
