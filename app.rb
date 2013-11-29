@@ -5,7 +5,7 @@ Dir.glob('./lib/*.rb') do |model|
   require model
 end
 
-set :database, "sqlite3:///meats.db"
+set :database, "postgresql://meat:waves@localhost:5432/meat"
 
 class App < Sinatra::Base
 

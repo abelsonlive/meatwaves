@@ -11,6 +11,7 @@ import requests
 import yaml
 import json
 import requests
+import time
 
 # Listening to meatspac, sending back to staging for now
 # This can be just an ADDRESS variable when/if listening to meatspac and posting back
@@ -27,7 +28,7 @@ class MeatWaves(object):
     def __init__(self, address):
       
       # ashley's app
-      self.app_url = 'http://localhost:9393/'
+      self.app_url = 'http://162.243.98.34:9292/'
 
       # twitter
       self.consumer_key = CONFIG["consumer_key"]
@@ -35,7 +36,7 @@ class MeatWaves(object):
       self.access_token = CONFIG["access_token"]
       self.access_token_secret = CONFIG["access_token_secret"]
       self.api = self.connect_to_twitter()
-      print self.api
+     
       # socket
       print "Listening to %s" % address
       with SocketIO(address) as socketIO:
@@ -106,12 +107,14 @@ class MeatWaves(object):
           key = message_data['chat']['key']
         )
         
-        print data['message']
+        print data['message'], data['key'], data['fingerprint']
         
         # post it to ruby app
         r = requests.post(self.app_url + "meats/new/", data=data)
-
-        # tweet it
+	
+	time.sleep(1)
+        
+	# tweet it
         m = MT.search(data['message'])
         if m: 
           self.post_tweet(data['message'], data['key'])
