@@ -112,6 +112,7 @@ class MeatWaves(object):
         # post it to ruby app
         r = requests.post(self.app_endpoint, data=data)
 
+        print data["message"]
         # tweet it
         m = MT.search(data['message'])
         if m:

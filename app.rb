@@ -1,13 +1,13 @@
 require 'bundler'
 Bundler.require
 
-#Dir.glob('./lib/*.rb') do |model|
-#  require model
-#end
+Dir.glob('./lib/*.rb') do |model|
+  require model
+end
+
+set :database, "sqlite3:///meats.db"
 
 class App < Sinatra::Base
-
-  set :database, "sqlite3:///meats.db"
 
   get "/" do
     "YO BRIAN"
@@ -24,7 +24,12 @@ class App < Sinatra::Base
   #end
 
   post "/meats/new/" do
-    @params = params.inspect
+    @meat = Meat.new( id: params["id"],
+                      key: params["key"],
+                      gif: params["gif"],
+                      message: params["message"],
+                      created: params["created"],
+                      fingerprint: params["fingerprint"] )
     haml :debug
   end
 
