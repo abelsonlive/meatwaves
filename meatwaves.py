@@ -15,7 +15,7 @@ import dataset
 PRODUCTION = 'https://chat.meatspac.es'
 STAGING = 'http://chat-staging.meatspac.es'
 
-MT = re.compile("^MT(:)?")
+MT = re.compile("^MT(:)?", re.IGNORECASE)
 NUMBERS = range(0, 1000000)
 
 CONFIG = yaml.safe_load(open('meatwaves.yml'))
@@ -24,8 +24,8 @@ class MeatWaves(object):
 
     def __init__(self, address):
       
-      # database
-      self.db = dataset.connect('sqlite:///meats.db')
+      # ashley's app
+      self.app_endpoint = 'localhost:9393/meats/new/'
 
       # twitter
       self.consumer_key = CONFIG["consumer_key"]
@@ -82,7 +82,7 @@ class MeatWaves(object):
       message = MT.sub('', message).strip()
       
       # disable direct messages
-      if message.lower().startswith('d'):
+      if message.lower().startswith('d '):
         message = message[1:].strip()
 
       print message
@@ -109,8 +109,8 @@ class MeatWaves(object):
         )
         print data['message'], data['created']
         
-        # upsert it
-        self.db['meats'].upsert(data, ['key'])
+        # mail it to ashley
+        r = requests.post(self.app_endpoint, data=data)
 
         # tweet it
         m = MT.search(data['message'])
