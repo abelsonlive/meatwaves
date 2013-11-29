@@ -7,6 +7,8 @@ end
 
 set :database, "postgresql://meat:waves@localhost:5432/meat"
 
+set :environment, :production
+
 class App < Sinatra::Base
 
   get "/" do
