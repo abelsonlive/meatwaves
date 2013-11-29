@@ -1,1 +1,4 @@
-%img{src: "#{@meat.gif}", width: "800px"}
+.row
+  %img{src: "#{@meat.gif}", class:"singleton"}
+  - 300.times do
+    %img{src: "#{@meat.gif}", class:"col-10"}

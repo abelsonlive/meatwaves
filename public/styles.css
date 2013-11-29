@@ -1,0 +1,22 @@
+.row {
+  width: 100%;
+}
+.col-5 {
+  width: 20%;
+  float: left;
+}
+
+.col-10 {
+  width: 10%;
+  float: left;
+}
+
+.singleton {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 800px;
+  height: 600px;
+  margin-top: -300px; /* Half the height */
+  margin-left: -400px; /* Half the width */
+}

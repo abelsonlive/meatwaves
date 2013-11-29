@@ -18,18 +18,24 @@ class App < Sinatra::Base
     haml :index
 	end
 
+  get "/meats/:fingerprint/" do
+    @meats = Meat.where("fingerprint = ? ", params[:fingerprint])
+  
+    haml :index
+  end
+
   get "/meats/:key.gif" do
     @meat = Meat.find_by key: params[:key]
     haml :meat
   end
 
   post "/meats/new/" do
-    Meat.create( id: params["id"],
-                      key: params["key"],
-                      gif: params["gif"],
-                      message: params["message"],
-                      created: params["created"],
-                      fingerprint: params["fingerprint"] )
+    Meat.create(  id: params["id"],
+                  key: params["key"],
+                  gif: params["gif"],
+                  message: params["message"],
+                  created: params["created"],
+                  fingerprint: params["fingerprint"] )
     haml :debug
   end
 
