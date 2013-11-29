@@ -1,7 +1,4 @@
 meatwaves.yml
 *.pyc
 .DS_Store
-<<<<<<< HEAD
-=======
 *.db
->>>>>>> bd19e75c2a88e40030b691a2d2ba6d861fe2ef87
