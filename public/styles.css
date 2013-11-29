@@ -1,5 +1,6 @@
 .row {
   width: 100%;
+  height: 2000px;
 }
 .col-5 {
   width: 20%;
@@ -19,4 +20,24 @@
   height: 600px;
   margin-top: -300px; /* Half the height */
   margin-left: -400px; /* Half the width */
+}
+
+/* clearfix */
+
+.cf:before,
+.cf:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
+}
+
+.cf:after {
+    clear: both;
+}
+
+/**
+ * For IE 6/7 only
+ * Include this rule to trigger hasLayout and contain floats.
+ */
+.cf {
+    *zoom: 1;
 }

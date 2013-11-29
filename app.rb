@@ -26,6 +26,7 @@ class App < Sinatra::Base
 
   get "/meats/:key.gif" do
     @meat = Meat.find_by :key=> params[:key]
+    @gif = @meat.gif
     haml :meat
   end
 
