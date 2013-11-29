@@ -6,6 +6,7 @@ Dir.glob('./lib/*.rb') do |model|
 end
 
 set :database, "sqlite3:///meats.db"
+set :environment, :production
 
 class App < Sinatra::Base
 
