@@ -7,15 +7,17 @@ from PIL import Image
 import StringIO
 import subprocess
 from random import choice
+import requests
 import yaml
-import dataset
+import json
+import requests
 
 # Listening to meatspac, sending back to staging for now
 # This can be just an ADDRESS variable when/if listening to meatspac and posting back
 PRODUCTION = 'https://chat.meatspac.es'
 STAGING = 'http://chat-staging.meatspac.es'
 
-MT = re.compile("^MT(:)?")
+MT = re.compile("^MT(:)?", re.IGNORECASE)
 NUMBERS = range(0, 1000000)
 
 CONFIG = yaml.safe_load(open('meatwaves.yml'))
@@ -24,8 +26,8 @@ class MeatWaves(object):
 
     def __init__(self, address):
       
-      # database
-      self.db = dataset.connect('sqlite:///meats.db')
+      # ashley's app
+      self.app_url = 'http://localhost:9393/'
 
       # twitter
       self.consumer_key = CONFIG["consumer_key"]
@@ -33,7 +35,7 @@ class MeatWaves(object):
       self.access_token = CONFIG["access_token"]
       self.access_token_secret = CONFIG["access_token_secret"]
       self.api = self.connect_to_twitter()
-
+      print self.api
       # socket
       print "Listening to %s" % address
       with SocketIO(address) as socketIO:
@@ -78,20 +80,16 @@ class MeatWaves(object):
       return media
 
 
-    def post_tweet(self, message, gif):
+    def post_tweet(self, message, key):
       message = MT.sub('', message).strip()
-      
+        
       # disable direct messages
-      if message.lower().startswith('d'):
+      if message.lower().startswith('d '):
         message = message[1:].strip()
 
-      print message
-
-      # format media
-      media = self.format_media(gif)
-
+      status = "%s\r\n%smeats/%s.gif" % (message, self.app_url, key)
       # post
-      self.api.update_status_with_media(status=message, media=media)     
+      self.api.update_status(status=status)     
 
 
     def on_message(self, *args):
@@ -107,18 +105,19 @@ class MeatWaves(object):
           created = int(message_data['chat']['value']['created']),
           key = message_data['chat']['key']
         )
-        print data['message'], data['created']
         
-        # upsert it
-        self.db['meats'].upsert(data, ['key'])
+        print data['message']
+        
+        # post it to ruby app
+        r = requests.post(self.app_url + "meats/new/", data=data)
 
         # tweet it
         m = MT.search(data['message'])
-        if m:
-          self.post_tweet(data['message'], data['gif'])
+        if m: 
+          self.post_tweet(data['message'], data['key'])
 
-      except:
-        print "Too close for missiles, switching to guns..."
+      except Exception as e:
+        print e
 
 if __name__ == '__main__':
     mw = MeatWaves(PRODUCTION)
