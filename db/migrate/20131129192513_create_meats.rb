@@ -4,7 +4,7 @@ class CreateMeats < ActiveRecord::Migration
       t.string   :key
       t.string   :gif
       t.string   :message
-      t.integer  :created 
+      t.bigint   :created 
       t.string   :fingerprint
 
       t.timestamps
