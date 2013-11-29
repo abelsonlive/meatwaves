@@ -13,18 +13,18 @@ class App < Sinatra::Base
     "YO BRIAN"
   end
 
-	#get "/meats/" do
-	#	@meats = Meat.all
-  #  haml :index
-	#end
+	get "/meats/" do
+		@meats = Meat.all
+    haml :index
+	end
 
-  #get "/meats/:id" do
-  #  @meat = Meat.get(:id)
-  #  haml :meat
-  #end
+  get "/meats/:key.gif" do
+    @meat = Meat.find_by key: params[:key]
+    haml :meat
+  end
 
   post "/meats/new/" do
-    @meat = Meat.new( id: params["id"],
+    Meat.create( id: params["id"],
                       key: params["key"],
                       gif: params["gif"],
                       message: params["message"],
