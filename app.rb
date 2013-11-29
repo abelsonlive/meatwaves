@@ -42,4 +42,8 @@ class App < Sinatra::Base
     #haml :debug #FOR DEBUGGS
   end
 
+  after do
+    ActiveRecord::Base.clear_active_connections!
+  end
+
 end
