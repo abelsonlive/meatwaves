@@ -108,9 +108,8 @@ class MeatWaves(object):
           created = int(message_data['chat']['value']['created']),
           key = message_data['chat']['key']
         )
-        print json.dumps(data) + ",\n"
         
-        # mail it to ashley
+        # post it to ruby app
         r = requests.post(self.app_endpoint, data=data)
 
         # tweet it
