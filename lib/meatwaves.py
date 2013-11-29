@@ -9,6 +9,7 @@ import subprocess
 from random import choice
 import yaml
 import dataset
+import json
 
 # Listening to meatspac, sending back to staging for now
 # This can be just an ADDRESS variable when/if listening to meatspac and posting back
@@ -25,7 +26,7 @@ class MeatWaves(object):
     def __init__(self, address):
       
       # ashley's app
-      self.app_endpoint = 'localhost:9393/meats/new/'
+      self.app_endpoint = 'http://localhost:9393/meats/new/'
 
       # twitter
       self.consumer_key = CONFIG["consumer_key"]
@@ -107,7 +108,7 @@ class MeatWaves(object):
           created = int(message_data['chat']['value']['created']),
           key = message_data['chat']['key']
         )
-        print data['message'], data['created']
+        print json.dumps(data) + ",\n"
         
         # mail it to ashley
         r = requests.post(self.app_endpoint, data=data)
@@ -118,7 +119,7 @@ class MeatWaves(object):
           self.post_tweet(data['message'], data['gif'])
 
       except:
-        print "Too close for missiles, switching to guns..."
+        pass
 
 if __name__ == '__main__':
     mw = MeatWaves(PRODUCTION)
