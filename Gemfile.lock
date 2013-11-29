@@ -94,6 +94,7 @@ DEPENDENCIES
   data_mapper
   dm-sqlite-adapter
   haml
+  multi_json
   shotgun
   sinatra
   sqlite3
