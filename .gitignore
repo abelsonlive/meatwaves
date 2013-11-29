@@ -1,4 +1,4 @@
-lib/meatwaves.yml
+meatwaves.yml
 lib/*.pyc
 .DS_Store
 *.db
