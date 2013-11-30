@@ -6,7 +6,6 @@ Dir.glob('./lib/*.rb') do |model|
 end
 
 set :database, "postgresql://meat:waves@localhost:5432/meat"
-
 set :environment, :production
 
 class App < Sinatra::Base
@@ -22,7 +21,6 @@ class App < Sinatra::Base
 
   get "/meats/:fingerprint/" do
     @meats = Meat.where("fingerprint = ? ", params[:fingerprint])
-  
     haml :index
   end
 
@@ -43,7 +41,7 @@ class App < Sinatra::Base
   end
 
   get "/meats/recent/"
-    @meat = Meat.all.first
+    @meat = Meat.first
     @gif = @meat.gif
     haml :meat
   end
