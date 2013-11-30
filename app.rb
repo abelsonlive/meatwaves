@@ -16,17 +16,20 @@ class App < Sinatra::Base
 
 	get "/meats/" do
 		@meats = Meat.all
+    
     haml :index
 	end
 
   get "/meats/:fingerprint/" do
     @meats = Meat.where("fingerprint = ? ", params[:fingerprint])
+    
     haml :index
   end
 
   get "/meats/:key.gif" do
     @meat = Meat.find_by :key=> params[:key]
     @gif = @meat.gif
+
     haml :meat
   end
 
@@ -40,7 +43,7 @@ class App < Sinatra::Base
     #haml :debug #FOR DEBUGGS
   end
 
-  get "/meats/recent/"
+  get "/meats/recent/" do
     @meat = Meat.first
     @gif = @meat.gif
     haml :meat
