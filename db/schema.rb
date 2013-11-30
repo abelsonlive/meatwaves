@@ -14,7 +14,7 @@ ActiveRecord::Schema.define(version: 20131129192513) do
 
   create_table "meats", force: true do |t|
     t.string   "key"
-    t.string   "gif"
+    t.text     "gif"
     t.string   "message"
     t.integer  "created"
     t.string   "fingerprint"

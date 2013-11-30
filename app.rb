@@ -6,6 +6,7 @@ Dir.glob('./lib/*.rb') do |model|
 end
 
 set :database, "sqlite3:///meats.db"
+set :environment, :production
 
 class App < Sinatra::Base
 
@@ -26,6 +27,7 @@ class App < Sinatra::Base
 
   get "/meats/:key.gif" do
     @meat = Meat.find_by :key=> params[:key]
+    @gif = @meat.gif
     haml :meat
   end
 
@@ -36,7 +38,11 @@ class App < Sinatra::Base
                   :message=> params["message"],
                   :created=> params["created"],
                   :fingerprint=> params["fingerprint"] )
-    haml :debug
+    #haml :debug #FOR DEBUGGS
+  end
+
+  after do
+    ActiveRecord::Base.clear_active_connections!
   end
 
 end
