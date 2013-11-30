@@ -41,6 +41,12 @@ class App < Sinatra::Base
     #haml :debug #FOR DEBUGGS
   end
 
+  get "/meats/recent"
+    @meat = Meat.all.first
+    @gif = @meat.gif
+    haml :meat
+  end
+
   after do
     ActiveRecord::Base.clear_active_connections!
   end
