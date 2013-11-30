@@ -11,11 +11,8 @@ import requests
 import yaml
 import json
 import requests
-<<<<<<< HEAD
 import time
-=======
 import bitly_api
->>>>>>> d0b9503b9aaa34c98461b9c9bbccd04eed720791
 
 # Listening to meatspac, sending back to staging for now
 # This can be just an ADDRESS variable when/if listening to meatspac and posting back
