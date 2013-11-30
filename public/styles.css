@@ -16,10 +16,10 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 800px;
-  height: 600px;
-  margin-top: -300px; /* Half the height */
-  margin-left: -400px; /* Half the width */
+  width: 400px;
+  height: 300px;
+  margin-top: -200px; /* Half the height */
+  margin-left: -150px; /* Half the width */
 }
 
 /* clearfix */
