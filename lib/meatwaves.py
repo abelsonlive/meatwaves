@@ -19,7 +19,7 @@ import bitly_api
 PRODUCTION = 'https://chat.meatspac.es'
 STAGING = 'http://chat-staging.meatspac.es'
 
-MT = re.compile("^MT(:)?", re.IGNORECASE)
+MT = re.compile("^MT(:) ?", re.IGNORECASE)
 NUMBERS = range(0, 1000000)
 
 CONFIG = yaml.safe_load(open('meatwaves.yml'))
