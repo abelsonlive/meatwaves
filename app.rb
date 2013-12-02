@@ -26,7 +26,7 @@ class App < Sinatra::Base
     haml :index
   end
 
-  get "/:hashtag/" do
+  get "/hashtag/:hashtag/" do
     @meats = Meat.where("hashtag = ? ", params[:hashtag])
   
     haml :index
