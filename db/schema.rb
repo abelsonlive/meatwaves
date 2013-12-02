@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 20131129192513) do
     t.string   "key"
     t.text     "gif"
     t.string   "message"
+    t.string   "hashtag"
     t.integer  "created",     limit: 8
     t.string   "fingerprint"
     t.datetime "created_at"

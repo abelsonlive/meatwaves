@@ -26,6 +26,12 @@ class App < Sinatra::Base
     haml :index
   end
 
+  get "/meats/:hashtag/" do
+    @meats = Meat.where("hashtag = ? ", params[:hashtag])
+  
+    haml :index
+  end
+
   get "/meats/:key.gif" do
     @meat = Meat.find_by :key=> params[:key]
     @gif = @meat.gif

@@ -7,8 +7,8 @@ development:
 production:
   adapter: postgresql
   database: meat
-  pool: 30
-  timeout: 6000
+  pool: 50
+  timeout: 12000
   username: meat
   password: waves
   host: localhost:5432

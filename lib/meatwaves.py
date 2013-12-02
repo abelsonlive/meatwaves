@@ -2,28 +2,20 @@ from socketIO_client import SocketIO
 import re
 from twython import Twython
 import os
-import base64
-from PIL import Image
-import StringIO
-import subprocess
-from random import choice
 import requests
 import yaml
-import json
 import requests
-<<<<<<< HEAD
 import time
-=======
 import bitly_api
->>>>>>> d0b9503b9aaa34c98461b9c9bbccd04eed720791
+
 
 # Listening to meatspac, sending back to staging for now
 # This can be just an ADDRESS variable when/if listening to meatspac and posting back
 PRODUCTION = 'https://chat.meatspac.es'
 STAGING = 'http://chat-staging.meatspac.es'
 
-MT = re.compile("^MT(:)?", re.IGNORECASE)
-NUMBERS = range(0, 1000000)
+MT = re.compile("^MT(:) ?", re.IGNORECASE)
+HT = re.compile("(#[^\s]+)")
 
 CONFIG = yaml.safe_load(open('meatwaves.yml'))
 
@@ -63,38 +55,14 @@ class MeatWaves(object):
         )
       return api
 
+
     def connect_to_bitly(self):
       api = bitly_api.Connection(access_token = self.bitly_access_token)
       return api
 
+
     def shorten_url(self, url):
       return self.bitly.shorten(uri=str(url))['url']
-
-    def format_media(self, b64):
-      # format string
-      b64 = b64.split('base64,')[1]
-
-      # pad string
-      b64 += "=" * ((4 - len(b64) % 4) % 4)
-
-      # decode string
-      data = base64.b64decode(b64)
-
-      # read in encoded data
-      f = StringIO.StringIO(data)
-
-      # open image
-      im = Image.open(f)
-
-      # save image and open it up again, don't know why i have to do this, it's a hack...
-      path = 'img%s.gif' % str(choice(NUMBERS))
-      im.save(path)
-      media = open(path, 'rb')
-
-      # remove image
-      subprocess.call(['rm', path])
-
-      return media
 
 
     def post_tweet(self, message, key):
@@ -118,7 +86,7 @@ class MeatWaves(object):
       try:            
         # Grab the message.
         message_data = args[0]
-        
+
         # unnest data
         data = dict(
           message = message_data['chat']['value']['message'].strip(),
@@ -127,13 +95,17 @@ class MeatWaves(object):
           created = int(message_data['chat']['value']['created']),
           key = message_data['chat']['key']
         )
-        
+        # extract hashtag
+        m = HT.match(data['message'])
+        if m:
+          data['hashtag'] = m.group(1)
+        else:
+          data['hashtag'] = ""
+          
         print data['message'], data['key'], data['fingerprint']
         
         # post it to ruby app
-        r = requests.post(self.app_url + "meats/new/", data=data)
-	
-	time.sleep(1)
+        r = requests.post(self.app_url + "meats/new/", data=data)	
         
 	# tweet it
         m = MT.search(data['message'])
