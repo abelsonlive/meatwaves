@@ -43,6 +43,7 @@ class App < Sinatra::Base
     Meat.create(  :id => params["id"],
                   :key => params["key"],
                   :gif=> params["gif"],
+                  :hashtag=> params["hashtag"],
                   :message=> params["message"],
                   :created=> params["created"],
                   :fingerprint=> params["fingerprint"] )

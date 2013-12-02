@@ -99,6 +99,7 @@ class MeatWaves(object):
         m = HT.match(data['message'])
         if m:
           data['hashtag'] = m.group(1)
+          print "HT:", data['hashtag']
         else:
           data['hashtag'] = ""
           

@@ -4,6 +4,7 @@ class CreateMeats < ActiveRecord::Migration
       t.string   :key
       t.text   :gif
       t.string   :message
+      t.string   :hashtag
       t.column   :created , :bigint
       t.string   :fingerprint
 
