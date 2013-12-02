@@ -28,5 +28,6 @@ ActiveRecord::Schema.define(version: 20131201202220) do
 
   add_index "meats", ["fingerprint"], name: "index_meats_on_fingerprint", using: :btree
   add_index "meats", ["key"], name: "index_meats_on_key", using: :btree
+  add_index "meats", ["hashtag"], name: "index_meats_on_hashtag", using: :btree
 
 end
