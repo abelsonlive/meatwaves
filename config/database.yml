@@ -1,6 +1,6 @@
 development:
   adapter: sqlite3
-  database: meats.db
+  database: db/development.sqlite3
   pool: 30
   timeout: 6000
 
