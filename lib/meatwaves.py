@@ -14,7 +14,7 @@ import bitly_api
 PRODUCTION = 'https://chat.meatspac.es'
 STAGING = 'http://chat-staging.meatspac.es'
 
-MT = re.compile("^MT(:) ?", re.IGNORECASE)
+MT = re.compile("^MT(:)? ", re.IGNORECASE)
 HT = re.compile("(#[^\s]+)")
 
 CONFIG = yaml.safe_load(open('meatwaves.yml'))
@@ -98,8 +98,8 @@ class MeatWaves(object):
         # extract hashtag
         m = HT.match(data['message'])
         if m:
-          data['hashtag'] = m.group(1)
-          print "HT:", data['hashtag']
+          data['hashtag'] = m.group(1).strip()
+          print "HT:", data['hashtag'][1:]
         else:
           data['hashtag'] = ""
           
@@ -108,7 +108,7 @@ class MeatWaves(object):
         # post it to ruby app
         r = requests.post(self.app_url + "meats/new/", data=data)	
         
-	# tweet it
+        # tweet it
         m = MT.search(data['message'])
         if m: 
           self.post_tweet(data['message'], data['key'])
