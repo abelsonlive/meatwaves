@@ -1,2 +1,10 @@
-.row{:style=>"background: url(#{@gif}); background-size: 120px 90px;"}
-  %img{:src=> "#{@gif}", :class=>"singleton"}
+.row{:style=>"background: url(#{@meat.gif}); background-size: 120px 90px;"}
+  %img{:src=> "#{@meat.gif}", :class=>"singleton"}
+#container.singleton
+  #cube.animate
+    %div{:style=>"background: url(#{@meat.gif})"}
+    %div{:style=>"background: url(#{@meat.gif})"}
+    %div{:style=>"background: url(#{@meat.gif})"}
+    %div{:style=>"background: url(#{@meat.gif})"}
+    %div{:style=>"background: url(#{@meat.gif})"}
+    %div{:style=>"background: url(#{@meat.gif})"}
